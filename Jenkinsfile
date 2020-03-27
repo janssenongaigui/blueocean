@@ -16,6 +16,11 @@ pipeline {
               }
             
          }
+		 stage('Security Scan') {
+              steps { 
+                 aquaMicroscanner imageName: 'alpine:latest', notCompleted: 'exit 1', onDisallowed: 'fail'
+              }
+         }      
          stage('Upload to AWS') {
               steps {
                   withAWS(region:'us-west-2',credentials:'3ce3431b-3a95-43ea-a16e-7a01fdd9a528') {
